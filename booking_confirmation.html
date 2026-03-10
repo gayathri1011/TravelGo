@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Booking Confirmation - TravelGo{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Success Banner -->
+            <div class="alert alert-success border-0" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white; border-radius: 12px; padding: 2rem;">
+                <div class="text-center mb-3">
+                    <i class="bi bi-check-circle" style="font-size: 3rem;"></i>
+                </div>
+                <h2 class="text-center mb-2" style="font-weight: 700;">Booking Confirmed!</h2>
+                <p class="text-center" style="opacity: 0.95; margin-bottom: 0;">Your travel booking has been successfully confirmed</p>
+            </div>
+
+            <!-- Confirmation Details -->
+            <div class="card border-0 shadow mt-4" style="border-radius: 12px; overflow: hidden;">
+                <div class="card-header" style="background: linear-gradient(135deg, #DC143C 0%, #B71C1C 100%); color: white; padding: 1.5rem; border: none;">
+                    <h4 class="mb-0" style="font-weight: 700;">Booking Details</h4>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <p style="color: #999; font-size: 0.9rem; margin-bottom: 0.3rem;">BOOKING ID</p>
+                            <h5 id="bookingId" style="color: #DC143C; font-weight: 600; margin-bottom: 1rem;">BK20260310XXXXXXXX</h5>
+                            
+                            <p style="color: #999; font-size: 0.9rem; margin-bottom: 0.3rem;">CONFIRMATION NUMBER</p>
+                            <h5 id="confirmationNo" style="color: #333; font-weight: 600; margin-bottom: 1rem; font-family: monospace;">XXXX-XXXX-XXXX</h5>
+                        </div>
+                        <div class="col-md-6">
+                            <p style="color: #999; font-size: 0.9rem; margin-bottom: 0.3rem;">BOOKING DATE</p>
+                            <h5 id="bookingDate" style="color: #333; font-weight: 600; margin-bottom: 1rem;">March 10, 2026</h5>
+                            
+                            <p style="color: #999; font-size: 0.9rem; margin-bottom: 0.3rem;">STATUS</p>
+                            <span class="badge bg-success" style="font-size: 0.95rem; padding: 0.5rem 1rem;">Confirmed</span>
+                        </div>
+                    </div>
+
+                    <hr style="border-color: #E0E0E0;">
+
+                    <!-- Journey Details -->
+                    <div class="mt-4 mb-4">
+                        <h6 style="color: #DC143C; font-weight: 600; margin-bottom: 1rem;"><i class="bi bi-map"></i> Journey Details</h6>
+                        
+                        <div class="row align-items-center mb-3">
+                            <div class="col-md-4 text-center">
+                                <h4 id="fromCity" style="color: #333; font-weight: 700; margin-bottom: 0.3rem;">NYC</h4>
+                                <p style="color: #999; font-size: 0.9rem; margin-bottom: 0;">Departure</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <i class="bi bi-arrow-right" style="font-size: 1.5rem; color: #DC143C;"></i>
+                                <p id="travelType" style="color: #DC143C; font-weight: 600; margin-top: 0.5rem; margin-bottom: 0;">Flight</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h4 id="toCity" style="color: #333; font-weight: 700; margin-bottom: 0.3rem;">LAX</h4>
+                                <p style="color: #999; font-size: 0.9rem; margin-bottom: 0;">Arrival</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p style="color: #999; font-size: 0.85rem; margin-bottom: 0.3rem;"><i class="bi bi-calendar"></i> Travel Date</p>
+                                <h6 id="travelDate" style="color: #333; font-weight: 600;">March 15, 2026</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <p style="color: #999; font-size: 0.85rem; margin-bottom: 0.3rem;"><i class="bi bi-ticket"></i> Passengers</p>
+                                <h6 id="passengers" style="color: #333; font-weight: 600;">1 Adult</h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="border-color: #E0E0E0;">
+
+                    <!-- Price Breakdown -->
+                    <div class="mt-4 mb-4">
+                        <h6 style="color: #DC143C; font-weight: 600; margin-bottom: 1rem;"><i class="bi bi-receipt"></i> Price Breakdown</h6>
+                        
+                        <div class="row mb-2">
+                            <div class="col-md-8">
+                                <p style="color: #666; margin-bottom: 0;">Base Price</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <p id="basePrice" style="color: #333; font-weight: 600; margin-bottom: 0;">$200.00</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-2">
+                            <div class="col-md-8">
+                                <p style="color: #666; margin-bottom: 0;">Taxes & Fees</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <p id="taxes" style="color: #333; font-weight: 600; margin-bottom: 0;">$20.00</p>
+                            </div>
+                        </div>
+
+                        <hr style="border-color: #E0E0E0;">
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h6 style="color: #333; font-weight: 700; margin-bottom: 0;">Total Amount</h6>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <h5 id="totalAmount" style="color: #DC143C; font-weight: 700; margin-bottom: 0;">$220.00</h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr style="border-color: #E0E0E0;">
+
+                    <!-- Passenger Details -->
+                    <div class="mt-4 mb-4">
+                        <h6 style="color: #DC143C; font-weight: 600; margin-bottom: 1rem;"><i class="bi bi-person"></i> Passenger Details</h6>
+                        
+                        <table class="table table-sm">
+                            <thead style="background-color: #F5F5F5; border-top: 1px solid #E0E0E0;">
+                                <tr>
+                                    <th style="color: #DC143C; font-weight: 600;">Name</th>
+                                    <th style="color: #DC143C; font-weight: 600;">Email</th>
+                                    <th style="color: #DC143C; font-weight: 600;">Phone</th>
+                                </tr>
+                            </thead>
+                            <tbody id="passengersList">
+                                <tr>
+                                    <td>John Doe</td>
+                                    <td>john@example.com</td>
+                                    <td>+1 (555) 000-0000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Important Information -->
+            <div class="alert alert-info border-0" style="background-color: #E3F2FD; border-left: 4px solid #2196F3; margin-top: 2rem; border-radius: 8px;">
+                <h6 style="color: #1976D2; font-weight: 600; margin-bottom: 1rem;"><i class="bi bi-info-circle"></i> Important Information</h6>
+                <ul style="color: #1565C0; margin-bottom: 0; padding-left: 1.5rem;">
+                    <li>A confirmation email has been sent to your registered email address</li>
+                    <li>Please arrive at the terminal/airport at least 2 hours before departure</li>
+                    <li>Keep your booking reference number safe for check-in</li>
+                    <li id="cancellationPolicy">Cancellations are allowed up to 24 hours before departure</li>
+                </ul>
+            </div>
+
+            <!-- Cancellation Policy -->
+            <div class="card border-0" style="background-color: #FFF3CD; border-left: 4px solid #FF9800; margin-top: 2rem; border-radius: 8px;">
+                <div class="card-body p-3">
+                    <h6 style="color: #E65100; font-weight: 600; margin-bottom: 0.5rem;"><i class="bi bi-exclamation-triangle"></i> Cancellation Policy</h6>
+                    <p id="cancellationDetails" style="color: #BF360C; font-size: 0.9rem; margin-bottom: 0;">
+                        Full refund if cancelled 24 hours before departure. 50% refund if cancelled within 24 hours.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mt-5">
+                <a href="/dashboard" class="btn btn-primary" style="padding: 0.8rem 2rem; font-weight: 600; border-radius: 8px;">
+                    <i class="bi bi-speedometer2"></i> Go to Dashboard
+                </a>
+                <button onclick="window.print()" class="btn btn-outline-secondary" style="padding: 0.8rem 2rem; font-weight: 600; border-radius: 8px;">
+                    <i class="bi bi-printer"></i> Print Confirmation
+                </button>
+                <a href="/search" class="btn btn-outline-primary" style="padding: 0.8rem 2rem; font-weight: 600; border-radius: 8px;">
+                    <i class="bi bi-search"></i> Book Another
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Load booking confirmation details from URL parameters or session
+document.addEventListener('DOMContentLoaded', () => {
+    // Get booking ID from URL parameter
+    const params = new URLSearchParams(window.location.search);
+    const bookingId = params.get('booking_id');
+    
+    if (bookingId) {
+        // Fetch booking details and populate the page
+        fetch(`/api/bookings/${bookingId}`)
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    const booking = result.data;
+                    populateConfirmation(booking);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+});
+
+function populateConfirmation(booking) {
+    // Populate all fields with booking data
+    document.getElementById('bookingId').textContent = booking.booking_id;
+    document.getElementById('confirmationNo').textContent = booking.confirmation_number;
+    document.getElementById('bookingDate').textContent = new Date(booking.booking_date).toLocaleDateString();
+    document.getElementById('fromCity').textContent = booking.from_city;
+    document.getElementById('toCity').textContent = booking.to_city;
+    document.getElementById('travelType').textContent = booking.booking_type;
+    document.getElementById('travelDate').textContent = new Date(booking.travel_date).toLocaleDateString();
+    document.getElementById('totalAmount').textContent = '$' + booking.total_price.toFixed(2);
+}
+</script>
+{% endblock %}

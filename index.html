@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}TravelGo - Book Your Travel{% endblock %}
+
+{% block content %}
+<div class="hero-section" style="background: linear-gradient(135deg, #DC143C 0%, #B71C1C 100%); padding: 100px 0; color: white;">
+    <div class="container text-center">
+        <h1 class="display-3 fw-bold mb-3" style="font-size: 3.5rem; letter-spacing: 2px;">
+            <i class="bi bi-airplane"></i> Welcome to TravelGo
+        </h1>
+        <p class="lead mb-5" style="font-size: 1.3rem; opacity: 0.95;">Your premium platform for booking buses, trains, flights, and hotels</p>
+        
+        {% if not user_email %}
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="/register" class="btn btn-light btn-lg px-5 gap-3" style="color: #DC143C; font-weight: 600;">
+                <i class="bi bi-person-plus"></i> Get Started
+            </a>
+            <a href="/login" class="btn btn-outline-light btn-lg px-5" style="font-weight: 600;">
+                <i class="bi bi-box-arrow-in-right"></i> Sign In
+            </a>
+        </div>
+        {% else %}
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <a href="/search" class="btn btn-light btn-lg px-5 gap-3" style="color: #DC143C; font-weight: 600;">
+                <i class="bi bi-search"></i> Start Searching
+            </a>
+            <a href="/dashboard" class="btn btn-outline-light btn-lg px-5" style="font-weight: 600;">
+                <i class="bi bi-suitcase"></i> My Bookings
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card text-center h-100 border-0 shadow-sm" style="transition: all 0.3s ease;">
+                <div class="card-body">
+                    <i class="bi bi-bus-front text-danger" style="font-size: 2.5rem;"></i>
+                    <h5 class="card-title mt-3" style="color: #DC143C; font-weight: 600;">Buses</h5>
+                    <p class="card-text">Affordable and comfortable long-distance travel</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card text-center h-100 border-0 shadow-sm" style="transition: all 0.3s ease;">
+                <div class="card-body">
+                    <i class="bi bi-train-front text-danger" style="font-size: 2.5rem;"></i>
+                    <h5 class="card-title mt-3" style="color: #DC143C; font-weight: 600;">Trains</h5>
+                    <p class="card-text">Book rail tickets with ease and flexibility</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card text-center h-100 border-0 shadow-sm" style="transition: all 0.3s ease;">
+                <div class="card-body">
+                    <i class="bi bi-airplane text-danger" style="font-size: 2.5rem;"></i>
+                    <h5 class="card-title mt-3" style="color: #DC143C; font-weight: 600;">Flights</h5>
+                    <p class="card-text">Quick bookings for domestic and international flights</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card text-center h-100 border-0 shadow-sm" style="transition: all 0.3s ease;">
+                <div class="card-body">
+                    <i class="bi bi-building text-danger" style="font-size: 2.5rem;"></i>
+                    <h5 class="card-title mt-3" style="color: #DC143C; font-weight: 600;">Hotels</h5>
+                    <p class="card-text">Find and book accommodations worldwide</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="py-5" style="background: linear-gradient(135deg, #F5F5F5 0%, #FFFFFF 100%);">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 text-center mb-4">
+                <h3 style="color: #DC143C;"><i class="bi bi-lightning-charge"></i> Fast Booking</h3>
+                <p style="color: #666;">Book your travel in just a few clicks</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <h3 style="color: #DC143C;"><i class="bi bi-shield-check"></i> Secure Payment</h3>
+                <p style="color: #666;">Your transactions are safe and encrypted</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <h3 style="color: #DC143C;"><i class="bi bi-bell"></i> Real-time Updates</h3>
+                <p style="color: #666;">Get instant notifications for every booking</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

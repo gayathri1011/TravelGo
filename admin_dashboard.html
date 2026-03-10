@@ -1,0 +1,312 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - TravelGo{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #DC143C 0%, #B71C1C 100%); color: white;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col">
+                <h1 class="mb-0" style="font-size: 2.5rem; font-weight: 700;"><i class="bi bi-shield-lock"></i> Admin Dashboard</h1>
+                <p style="opacity: 0.9; margin-top: 0.5rem;">System management and monitoring</p>
+            </div>
+            <div class="col text-end">
+                <span class="badge bg-light text-danger" style="padding: 0.7rem 1.2rem; font-size: 0.95rem;">
+                    <i class="bi bi-star-fill"></i> Administrator
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <!-- Statistics Cards -->
+    <div class="row mb-5">
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow" style="border-radius: 12px; border-left: 5px solid #DC143C;">
+                <div class="card-body text-center">
+                    <h3 id="totalUsers" style="color: #DC143C; font-weight: 700;">0</h3>
+                    <p style="color: #666; margin-bottom: 0;"><i class="bi bi-people"></i> Total Users</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow" style="border-radius: 12px; border-left: 5px solid #28a745;">
+                <div class="card-body text-center">
+                    <h3 id="totalBookings" style="color: #28a745; font-weight: 700;">0</h3>
+                    <p style="color: #666; margin-bottom: 0;"><i class="bi bi-ticket"></i> Total Bookings</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow" style="border-radius: 12px; border-left: 5px solid #FFC107;">
+                <div class="card-body text-center">
+                    <h3 id="totalRevenue" style="color: #FFC107; font-weight: 700;">$0</h3>
+                    <p style="color: #666; margin-bottom: 0;"><i class="bi bi-cash-coin"></i> Total Revenue</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow" style="border-radius: 12px; border-left: 5px solid #17a2b8;">
+                <div class="card-body text-center">
+                    <h3 id="pendingBookings" style="color: #17a2b8; font-weight: 700;">0</h3>
+                    <p style="color: #666; margin-bottom: 0;"><i class="bi bi-hourglass-split"></i> Pending</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="card border-0 shadow" style="border-radius: 12px; overflow: hidden;">
+        <div class="card-header" style="background: linear-gradient(135deg, #DC143C 0%, #B71C1C 100%); color: white; padding: 0; border: none;">
+            <ul class="nav nav-tabs" role="tablist" style="border: none; margin-bottom: 0;">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings-content" type="button" role="tab" style="color: white; border-bottom: 3px solid white;">
+                        <i class="bi bi-ticket"></i> All Bookings
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="users-tab" data-bs-toggle="tab" data-bs-target="#users-content" type="button" role="tab" style="color: rgba(255,255,255,0.7);">
+                        <i class="bi bi-people"></i> Users
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="statistics-tab" data-bs-toggle="tab" data-bs-target="#statistics-content" type="button" role="tab" style="color: rgba(255,255,255,0.7);">
+                        <i class="bi bi-graph-up"></i> Statistics
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <!-- Bookings Tab -->
+            <div class="tab-pane fade show active" id="bookings-content" role="tabpanel">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="bookingSearch" placeholder="Search by booking ID, user email...">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead style="background-color: #F5F5F5; border-top: 2px solid #DC143C;">
+                            <tr>
+                                <th style="color: #DC143C; font-weight: 600;">Booking ID</th>
+                                <th style="color: #DC143C; font-weight: 600;">User</th>
+                                <th style="color: #DC143C; font-weight: 600;">Type</th>
+                                <th style="color: #DC143C; font-weight: 600;">Route</th>
+                                <th style="color: #DC143C; font-weight: 600;">Price</th>
+                                <th style="color: #DC143C; font-weight: 600;">Status</th>
+                                <th style="color: #DC143C; font-weight: 600;">Date</th>
+                                <th style="color: #DC143C; font-weight: 600;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsTable">
+                            <tr>
+                                <td colspan="8" class="text-center text-muted py-4">
+                                    <div class="spinner-border spinner-border-sm" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Users Tab -->
+            <div class="tab-pane fade" id="users-content" role="tabpanel">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="userSearch" placeholder="Search by email, name...">
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead style="background-color: #F5F5F5; border-top: 2px solid #DC143C;">
+                            <tr>
+                                <th style="color: #DC143C; font-weight: 600;">Email</th>
+                                <th style="color: #DC143C; font-weight: 600;">Name</th>
+                                <th style="color: #DC143C; font-weight: 600;">Phone</th>
+                                <th style="color: #DC143C; font-weight: 600;">Joined</th>
+                                <th style="color: #DC143C; font-weight: 600;">Bookings</th>
+                                <th style="color: #DC143C; font-weight: 600;">Total Spent</th>
+                                <th style="color: #DC143C; font-weight: 600;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable">
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-4">
+                                    <div class="spinner-border spinner-border-sm" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Statistics Tab -->
+            <div class="tab-pane fade" id="statistics-content" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-0" style="background-color: #F5F5F5;">
+                            <div class="card-header" style="background: white; border: none; padding: 1rem;">
+                                <h5 style="color: #DC143C; font-weight: 600; margin-bottom: 0;"><i class="bi bi-bar-chart"></i> Bookings by Type</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="bookingsByTypeChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-0" style="background-color: #F5F5F5;">
+                            <div class="card-header" style="background: white; border: none; padding: 1rem;">
+                                <h5 style="color: #DC143C; font-weight: 600; margin-bottom: 0;"><i class="bi bi-line-chart"></i> Revenue Trend</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="revenueChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Stats -->
+                <div class="card border-0" style="background-color: #F5F5F5;">
+                    <div class="card-header" style="background: white; border: none; padding: 1rem;">
+                        <h5 style="color: #DC143C; font-weight: 600; margin-bottom: 0;"><i class="bi bi-list-check"></i> Booking Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="text-center">
+                                    <h4 id="confirmedCount" style="color: #28a745;">0</h4>
+                                    <p style="color: #666;">Confirmed</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="text-center">
+                                    <h4 id="pendingCount" style="color: #FFC107;">0</h4>
+                                    <p style="color: #666;">Pending</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="text-center">
+                                    <h4 id="cancelledCount" style="color: #dc3545;">0</h4>
+                                    <p style="color: #666;">Cancelled</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="text-center">
+                                    <h4 id="completedCount" style="color: #17a2b8;">0</h4>
+                                    <p style="color: #666;">Completed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for booking details -->
+<div class="modal fade" id="bookingModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 12px;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #DC143C 0%, #B71C1C 100%); color: white; border: none;">
+                <h5 class="modal-title">Booking Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: brightness(0) invert(1);"></button>
+            </div>
+            <div class="modal-body" id="bookingModalContent">
+                <!-- Content loaded via JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="cancelBookingBtn">Cancel Booking</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.0/dist/chart.min.js"></script>
+<script>
+// Load admin statistics
+async function loadStatistics() {
+    try {
+        const response = await fetch('/admin/api/statistics');
+        const result = await response.json();
+        
+        if (result.success) {
+            const stats = result.statistics;
+            document.getElementById('totalUsers').textContent = stats.total_users;
+            document.getElementById('totalBookings').textContent = stats.total_bookings;
+            document.getElementById('totalRevenue').textContent = '$' + stats.total_revenue.toFixed(2);
+            document.getElementById('pendingBookings').textContent = stats.pending_bookings;
+            
+            // Update detailed stats
+            document.getElementById('confirmedCount').textContent = stats.confirmed_bookings;
+            document.getElementById('pendingCount').textContent = stats.pending_bookings;
+            document.getElementById('cancelledCount').textContent = stats.cancelled_bookings;
+        }
+    } catch (error) {
+        console.error('Error loading statistics:', error);
+    }
+}
+
+// Load all bookings
+async function loadBookings() {
+    try {
+        const response = await fetch('/admin/api/bookings');
+        const result = await response.json();
+        
+        if (result.success) {
+            const tableBody = document.getElementById('bookingsTable');
+            tableBody.innerHTML = '';
+            
+            if (result.bookings.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">No bookings found</td></tr>';
+                return;
+            }
+            
+            result.bookings.forEach(booking => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${booking.booking_id}</strong></td>
+                    <td>${booking.user_email}</td>
+                    <td><span class="badge bg-info">${booking.booking_type}</span></td>
+                    <td>${booking.from_city} → ${booking.to_city}</td>
+                    <td>$${booking.total_price}</td>
+                    <td><span class="badge bg-success">${booking.status}</span></td>
+                    <td>${booking.travel_date}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="viewBooking('${booking.booking_id}')">
+                            <i class="bi bi-eye"></i> View
+                        </button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    } catch (error) {
+        console.error('Error loading bookings:', error);
+    }
+}
+
+// View booking details
+async function viewBooking(bookingId) {
+    // Implementation would fetch and display booking details
+    console.log('View booking:', bookingId);
+}
+
+// Load data on page load
+document.addEventListener('DOMContentLoaded', () => {
+    loadStatistics();
+    loadBookings();
+});
+
+// Refresh stats every 30 seconds
+setInterval(() => {
+    loadStatistics();
+    loadBookings();
+}, 30000);
+</script>
+{% endblock %}

@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  travelgo-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - SNS_TOPIC_ARN=${SNS_TOPIC_ARN}
+      - SECRET_KEY=${SECRET_KEY}
+    volumes:
+      - ./backend:/app
+      - ./frontend:/frontend
+    command: flask run --host=0.0.0.0
+    networks:
+      - travelgo-network
+
+networks:
+  travelgo-network:
+    driver: bridge
