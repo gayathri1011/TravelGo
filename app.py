@@ -16,9 +16,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Create Flask app
-app = Flask(__name__, 
-            template_folder='../frontend/templates',
-            static_folder='../frontend/static')
+app = Flask(__name__)
 
 # Load configuration
 env = os.getenv('FLASK_ENV', 'development')
@@ -36,9 +34,9 @@ app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
 # Register blueprints
-from routes.auth import auth_bp
-from routes.bookings import bookings_bp
-from routes.search import search_bp
+from auth import auth_bp
+from bookings import bookings_bp
+from search import search_bp
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(bookings_bp)

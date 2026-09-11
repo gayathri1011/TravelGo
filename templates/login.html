@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}Login - TravelGo{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <div class="card border-0 shadow" style="border-radius: 12px; overflow: hidden;">
+                <div class="card-header" style="background: linear-gradient(135deg, #DC143C 0%, #B71C1C 100%); color: white; padding: 2rem; border: none;">
+                    <h2 class="card-title text-center mb-0" style="font-size: 1.8rem; font-weight: 700;">Welcome Back</h2>
+                    <p class="text-center mb-0" style="opacity: 0.9; font-size: 0.95rem; margin-top: 0.5rem;">Sign in to your TravelGo account</p>
+                </div>
+                <div class="card-body p-5">
+                    <form id="loginForm">
+                        <div class="mb-4">
+                            <label for="email" class="form-label" style="color: #DC143C; font-weight: 600;">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required autofocus style="border: 2px solid #E0E0E0; padding: 0.8rem; border-radius: 8px;">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="password" class="form-label" style="color: #DC143C; font-weight: 600;">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required style="border: 2px solid #E0E0E0; padding: 0.8rem; border-radius: 8px;">
+                        </div>
+                        
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe">
+                            <label class="form-check-label" for="rememberMe" style="color: #666;">
+                                Remember me
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 mb-3" style="padding: 0.9rem; font-weight: 600; border-radius: 8px; font-size: 1.05rem;">
+                            <i class="bi bi-box-arrow-in-right"></i> Sign In
+                        </button>
+                    </form>
+                    
+                    <div id="message" class="alert d-none" role="alert"></div>
+                    
+                    <p class="text-center" style="color: #666;">
+                        Don't have an account? <a href="/register" style="color: #DC143C; font-weight: 600; text-decoration: none;">Create one here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const messageDiv = document.getElementById('message');
+    
+    try {
+        const response = await fetch('/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showMessage('Login successful! Redirecting...', 'success', messageDiv);
+            setTimeout(() => {
+                window.location.href = '/search';
+            }, 1500);
+        } else {
+            showMessage(result.message || 'Login failed', 'danger', messageDiv);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showMessage('An error occurred. Please try again.', 'danger', messageDiv);
+    }
+});
+
+function showMessage(message, type, element) {
+    element.textContent = message;
+    element.className = `alert alert-${type}`;
+    element.classList.remove('d-none');
+}
+</script>
+{% endblock %}

@@ -3,8 +3,8 @@ Authentication routes for user registration, login, and session management
 """
 from flask import Blueprint, request, jsonify, session
 from werkzeug.security import generate_password_hash, check_password_hash
-from aws.local_db import LocalDatabase
-from utils.helpers import validate_user_data, is_valid_email
+from local_db import LocalDatabase
+from helpers import validate_user_data, is_valid_email
 import logging
 
 logger = logging.getLogger(__name__)
